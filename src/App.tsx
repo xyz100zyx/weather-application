@@ -1,24 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { Routes, Route, Link } from "react-router-dom";
+import {Home} from "./pages/Home/components/Home";
+import {MonthStatistics} from "./pages/MonthStatistics/components/MonthStatistics";
+import {Header} from "../src/shared/Header/Header";
+import "./styles/index.scss";
+import { Popup } from './shared/Popup/Popup';
+import { useDispatch } from 'react-redux';
+import { useCustomDispatch, useCustomSelector } from './hooks/store';
+import { selectCurrentCityName } from './store/selectors';
+import {CityProvider} from "./provider/CityProvider"
+
 
 function App() {
+
+  const dispatch = useCustomDispatch();
+  // const cityName = useCustomSelector(selectCurrentCityName);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="global-container">
+      {/* {<Popup />} */}
+      <div className="container">
+        <CityProvider>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />          
+            <Route path="/month-statistics" element={<MonthStatistics />} />
+          </Routes>
+        </CityProvider>
+      </div>
     </div>
   );
 }
